@@ -6,12 +6,12 @@ const app = express()
 app.set("view engine", "ejs");
 //global variables
 
-class Character {
-  constructor(name, race, characterClass) {
-  this.id = characterList.length + 1000;
+class protag {
+  constructor(name, race, protagClass) {
+  this.id = protagList.length + 1000;
   this.name = name
   this.race = race
-  this.characterClass = characterClass
+  this.protagClass = protagClass
   this.equipment = {
     head: {},
     chest: {},
@@ -50,8 +50,8 @@ class Character {
   }
 }
 
-var characterList = []
-characterList.push(new Character('Jack', 'Human', 'Knight'))
+var protagList = []
+protagList.push(new protag('Jack', 'Human', 'Knight'))
 
 //holds all possible items
 var equipment_list = [
@@ -72,18 +72,19 @@ var equipment_list = [
 ];
 
 
-/*if (character.equipment.two_handed) {
-  character.equipment.arm_p = {}
-  character.equipment.arm_s = {}
+/*if (protag.equipment.two_handed) {
+  protag.equipment.arm_p = {}
+  protag.equipment.arm_s = {}
 }*/
-characterList[0].pickupItem('Longsword')
-characterList[0].unequipItem('two_handed')
+protagList[0].pickupItem('Longsword')
+protagList[0].unequipItem('two_handed')
 //creates get endpoint
-app.get('/profile/:characterid', (req, res) => {
-  console.log(req.params.characterid)
+app.get('/profile/:protagid', (req, res) => {
+  console.log(req.params.protagid)
 
-  var foundProfile = characterList.find(character => character.id == req.params.characterid)
+  var foundProfile = protagList.find(protag => protag.id == req.params.protagid)
   console.log(foundProfile)
+
 
   if (foundProfile) {
 
@@ -95,10 +96,10 @@ app.get('/profile/:characterid', (req, res) => {
 }
 });
 
-//this endpoint makes a new character
+//this endpoint makes a new protag
 app.get('/new', (req, res) => {
-  characterList.push(new Character('James', 'human', 'conqueror'))
-  res.redirect('/profile/' + characterList[characterList.length - 1].id)
+  protagList.push(new protag('James', 'human', 'conqueror'))
+  res.redirect('/profile/' + protagList[protagList.length - 1].id)
 })
 //starts an http listen server
 app.listen(1000)
